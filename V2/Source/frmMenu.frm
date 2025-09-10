@@ -108,7 +108,7 @@ Begin VB.Form frmMenu
       End
    End
    Begin VB.Menu mnuF 
-      Caption         =   "FontV"
+      Caption         =   "Font"
       Begin VB.Menu mnuFont 
          Caption         =   "Edit Mode"
          Index           =   1
@@ -283,7 +283,7 @@ Begin VB.Form frmMenu
       End
    End
    Begin VB.Menu mnuScrEd 
-      Caption         =   "SEdit"
+      Caption         =   "ScrEdit"
       Begin VB.Menu mnuSE 
          Caption         =   "Clear Screen"
          Index           =   1
@@ -321,6 +321,21 @@ Begin VB.Form frmMenu
          Index           =   9
       End
    End
+   Begin VB.Menu mnuHex 
+      Caption         =   "Hex"
+      Begin VB.Menu mnuH 
+         Caption         =   "Load Compare File..."
+         Index           =   1
+      End
+      Begin VB.Menu mnuH 
+         Caption         =   "Export..."
+         Index           =   2
+      End
+      Begin VB.Menu mnuH 
+         Caption         =   "Calculate MD5"
+         Index           =   3
+      End
+   End
    Begin VB.Menu mnuFileList 
       Caption         =   "File List"
    End
@@ -341,42 +356,102 @@ Attribute VB_Exposed = False
 ' - When the menu is selected it calls the subroutines here.
 ' - Menu items have a number from 1 to x which are passed back to the form specified with 'MenuForm'
 ' - Menu numbers are assigned values in blocks to group menus
-' The FORM:
+' The Target FORM:
 ' - Has one routine to handle menu selection
 ' - Acts on the menu selection using the number
 
 Option Explicit
 
-'---- Main Form Menus
+'=========================
+' MAIN FORM MENUS
+'=========================
+' Menu 0 - Local Options      (Items   1- 99)
+' Menu 1 - Directory Options  (Items 101-199)
+' Menu 2 - Theme Menu         (Items 201-299)
+' Menu 3 - Character Encoding (Items 300-399) Shared
+' Menu 4 - Device Control     (Items 400-499)
+' Menu 5 - Font Size          (Items 501-599) Shared
 
-'-- Local Directory Menu
+'-- Local Options Menu (1-99)
 Private Sub mnuLocal_Click(Index As Integer)
-    
     Call frmMain.DoMenu(Index)                                              'Menu Starts at 1
-
 End Sub
-'-- Disk Image Menu
+
+'-- Directory Options Menu (101-199)
+
 Private Sub mnuImg_Click(Index As Integer)
-    
     Call frmMain.DoMenu(Index + 100)                                        'Menu Starts at 101
-
 End Sub
 
-'-- Screen Editor Menu
+'-- Theme Menu (201-299)
+Private Sub mnuTheme_Click(Index As Integer)
+    Call frmMain.DoMenu(Index + 200)                                        'Menu Starts at 201
+End Sub
+
+'****************************
+'-- Character Encoding Menu (301-399)
+' Reserved. Handled Below
+'****************************
+
+'-- Device Control Menu (401-499)
+' Includes: Initialize,Validate,Format, Change Device#, Set Single/Double sided, Re-Scan devices
+
+Private Sub mnuDev_Click(Index As Integer)
+    Call frmMain.DoMenu(Index + 400)                                        'Menu Starts at 401
+End Sub
+
+
+'=========================
+' VIEWER MENUS
+'=========================
+' Menu 0 - Font Select          (  0- 99)
+' Menu 1 - Font Convert submenu (101-199)
+' Menu 2 - Screen Editor Theme  (201-299)
+' Menu 4 - Hex Menu             (401-499)
+
+'-- Font Menu (1-99)
+Private Sub mnuFont_Click(Index As Integer)
+    Call frmViewer.DoFMenu(Index)                                           'Menu Starts at 1
+End Sub
+
+'-- Font Convert Sub-Menu (101-199)
+Private Sub mnuConvert_Click(Index As Integer)
+    Call frmViewer.DoFMenu(Index + 100)                                     'Menu Starts at 101
+End Sub
+'-- Screen Editor - Select Theme Menu (201-299)
 Private Sub mnuSE_Click(Index As Integer)
 
-    Call frmViewer.DoFMenu(Index + 200) 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz TEST
+    Call frmViewer.DoFMenu(Index + 200)                                     'Menu Starts at 201
 
 End Sub
 
-'-- Theme Menu
-Private Sub mnuTheme_Click(Index As Integer)
-    
-    Call frmMain.DoMenu(Index + 200)                                        'Menu Starts at 201
+'****************************
+'--- Font Encoding Menu (301-399)
+' Reserved. Handled below                                                   'Reserved Starts at 301
+'****************************
 
+'--- Hex Viewer Menu (401-499)
+Private Sub mnuH_Click(Index As Integer)
+    Call frmViewer.DoFMenu(Index + 400)                                     'Menu Starts at 401
 End Sub
 
-'-- Character Encoding (PETSCII, Screen, ASCII etc)
+'****************************
+'--- Font Size Menu (501-599)
+' Reserved. Handled below                                                   'Reserved Starts at 501
+'****************************
+
+'=========================
+' SHARED MENUS
+'=========================
+' Menu 3 - Font Encoding Menu  (301-399)
+' Menu 5 - Font Size Menu      (501-599)
+
+' These menu are used in both Main Form and Viewer form. The MenuForm Global variable is set to specify the form
+' 1 = Main Form
+' 2 = Viewer Form
+
+'-- Character Encoding Menu (301-399)
+' (PETSCII, Screen, ASCII etc)
 Public Sub mnuEnc_Click(Index As Integer)
     
     If MenuForm = 1 Then Call frmMain.DoMenu(Index + 300)                   'Menu Starts at 301
@@ -384,28 +459,9 @@ Public Sub mnuEnc_Click(Index As Integer)
 
 End Sub
 
-'-- Device Control Menu
-' Includes: Initialize,Validate,Format, Change Device#, Set Single/Double sided, Re-Scan devices
-Private Sub mnuDev_Click(Index As Integer)
-    Call frmMain.DoMenu(Index + 400)                                        'Menu Starts at 401
-End Sub
-
-'---- Font Menus
-
-'-- Font Menu
-Private Sub mnuFont_Click(Index As Integer)
-    Call frmViewer.DoFMenu(Index)                      'Menu Starts at 1
-End Sub
-
-'-- Font Convert Sub-Menu
-Private Sub mnuConvert_Click(Index As Integer)
-    Call frmViewer.DoFMenu(Index + 100)                 'Menu Starts at 101
-End Sub
-
-
+'--- Font Size Menu (501-599)
 Private Sub mnuFS_Click(Index As Integer)
-    If MenuForm = 1 Then Call frmMain.DoMenu(Index + 500)                       'Menu Starts at 1
-    If MenuForm = 2 Then Call frmViewer.DoFMenu(Index + 500)                    'Menu Starts at 1
-
+    If MenuForm = 1 Then Call frmMain.DoMenu(Index + 500)                    'Menu Starts at 1
+    If MenuForm = 2 Then Call frmViewer.DoFMenu(Index + 500)                 'Menu Starts at 1
 End Sub
 

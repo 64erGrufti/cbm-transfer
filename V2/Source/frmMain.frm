@@ -983,7 +983,7 @@ Begin VB.Form frmMain
          ScaleWidth      =   22
          TabIndex        =   147
          ToolTipText     =   "About CBM Transfer"
-         Top             =   390
+         Top             =   510
          Width           =   330
       End
       Begin VB.PictureBox cmdCopyLeft 
@@ -1034,6 +1034,27 @@ Begin VB.Form frmMain
          Top             =   4800
          Visible         =   0   'False
          Width           =   885
+      End
+      Begin VB.Label lblSizer3 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "^"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   195
+         Left            =   415
+         TabIndex        =   175
+         ToolTipText     =   "Minimum-Up"
+         Top             =   60
+         Width           =   105
       End
       Begin VB.Label lblFGBG 
          Appearance      =   0  'Flat
@@ -1179,7 +1200,7 @@ Begin VB.Form frmMain
          Height          =   165
          Left            =   390
          TabIndex        =   99
-         Top             =   840
+         Top             =   960
          Width           =   255
       End
       Begin VB.Label lblSizer 
@@ -1200,7 +1221,7 @@ Begin VB.Form frmMain
          Left            =   720
          TabIndex        =   62
          ToolTipText     =   "Show/Hide Pane"
-         Top             =   6420
+         Top             =   60
          Width           =   225
       End
    End
@@ -3024,7 +3045,7 @@ Dim FontBMPFlag     As Boolean          'Flag to indicate BMP font loaded
 
 '---- INFO: Display Program info and acknowlegements
 Private Sub cmdAbout_Click()
-    MyMsg "CBM-Transfer V2.05 (Aug 1/2025)" & Cr & _
+    MyMsg "CBM-Transfer V2.06, 2025-09-10" & Cr & _
           "(C)2007-2025 Steve J. Gray" & Cr & Cr & _
           "A front-end for: OpenCBM, VICE, NibTools, and CBMLink" & Cr & Cr & _
           "Based on GUI4CBM4WIN V0.4.1," & Cr & _
@@ -3288,6 +3309,24 @@ Private Sub lblSizer2_Click()
 
 End Sub
 
+'---- GUI: Click to Expand/Contract HEIGHT
+' Toggles Layout from Normal to Minimized height
+
+Private Sub lblSizer3_Click()
+    Dim Tmp As String
+    
+    Tmp = "^"
+    If lblSizer3.Caption = Tmp Then
+        lblSizer3.Caption = "v"                                     'Toggle to Minimized
+    Else
+        lblSizer3.Caption = Tmp                                     'Toggle to Normal
+    End If
+    
+    SetLayout                                                       'Re-arrange GUI
+    
+End Sub
+
+
 '---- GUI: Click to Select the LEFT Frame
 Private Sub lblSrcMode_Click(Index As Integer)
     
@@ -3462,7 +3501,12 @@ Sub SetLayout()
 
     '-- Calculate FORM Size, and set Sizing arrows
     
-    FHi = lblDrag.Height + S + frSrc(0).Height + S + lblSrcMode(0).Height + S            'FORM Height
+    
+    If lblSizer3.Caption = "^" Then
+        FHi = lblDrag.Height + S + frSrc(0).Height + S + lblSrcMode(0).Height + S            'FORM Height Normal
+    Else
+        FHi = lblDrag.Height + lblSrcMode(0).Height + 7 * S
+    End If
     
     If Layout2 = 0 Then                                         'Is DEST area Hidden?
         lblSizer.Caption = ">>"                                 'YES: Set sizer to ENLARGE
@@ -3744,6 +3788,7 @@ Private Sub DoTheme()
     
     lblSizer.ForeColor = ThemeMenuFG
     lblSizer2.ForeColor = ThemeMenuFG
+    lblSizer3.ForeColor = ThemeMenuFG
     lblTheme.ForeColor = ThemeMenuFG:
         
     '-- Set Frames and Elements inside them
@@ -3850,11 +3895,21 @@ Private Sub cmdImageMenu_Click(Index As Integer)
 End Sub
 
 '---- GUI: Handle Menu Selections
-' This is called from frmMenu
+' This is called from frmMenu.
+' An offset is added in the Menu subroutes so that each menu has it's own range usually 100 slots (1-99)
+'
+' Menu 1 - Local Options     (Items   1- 99)
+' Menu 2 - Directory Options (Items 101-199)
+' Menu 4 - Select Theme      (Items 201-299)
+' Menu 5 - Encoding Options  (Items 300-399)
+' Menu 6 - Device Control    (Items 400-499)
+'
 Sub DoMenu(ByVal Index As Integer)
     Dim Tmp As String
     
-    Select Case Index                                       '--- Menu 1 - Local Options
+    Select Case Index
+        
+        '--- Menu 1 - Local Options (Items 1-99)
         
         Case 1: ShellExecute hWnd, "open", LocalDir(0), vbNullString, LocalDir(0), 1
         Case 2: ShellExecute hWnd, "open", LocalDir(1), vbNullString, LocalDir(1), 1
@@ -3876,7 +3931,7 @@ Sub DoMenu(ByVal Index As Integer)
             
             dirLocal(MenuNum).Refresh                       'Refresh the Directory List
             
-        '--- Menu 2 - Directory Options
+        '--- Menu 2 - Directory Options (Items 101-199)
         
         Case 101: SaveDirText                               'Save Directory List as Text
         Case 102: WriteDirTextTo CatalogFile, True          'Add To the Catalog
@@ -3885,20 +3940,20 @@ Sub DoMenu(ByVal Index As Integer)
         Case 105: ImageBackup MenuNum                       'Backup the Image
         Case 106 To 109: ImageSort MenuNum, Index - 105     'Sort the Directory (Method must be 1 to 4)
         
-        '--- Menu 4 - Select Theme
+        '--- Menu 4 - Select Theme (Items 201-299)
         
         Case 201 To 299
             Theme = Index - 201                             'Which Theme Number is it?
             SetTheme                                        'Set the Theme
             
-        '--- Menu 5 - Encoding Options
+        '--- Menu 5 - Encoding Options (Items 300-399)
         
         Case 300 To 399
             EncodeL(MenuNum) = Index - 301                  'Set the Encoding
             SetEncodeDesc                                   'Set the ToolTip
             RefreshList MenuNum                             'RE-draw the list
 
-        '--- Menu 6 - Device Control
+        '--- Menu 6 - Device Control (Items 400-499)
         
         Case 400 To 499
             DoDeviceMenu Index - 400                        'Handle Device Options
@@ -6508,7 +6563,8 @@ Private Sub txtLocalDir_OLEDragDrop(Index As Integer, Data As DataObject, Effect
     If Data.GetFormat(vbCFFiles) Then
         Dim vFn As Variant
         For Each vFn In Data.Files
-            Tmp = PathOnly(vFn): If Tmp <> "" Then SetLocalPath Index, Tmp             'Get path and use it if valid
+            Tmp = PathOnly(vFn)
+            If Tmp <> "" Then SetLocalPath Index, Tmp                          'Get path and use it if valid
         Next
     End If
 

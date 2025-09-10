@@ -1,0 +1,489 @@
+CBM-Transfer (C)2007-2025 Steve J. Gray (sjgray@rogers.com)  www.cbmsteve.ca
+============
+
+Change Log
+
+2.06 - Sep 10,2025
+   * Add Minimize-Up button to centre panel. Move expand-right button to top.
+   * Viewer: HEX
+	* Replace "wide" option with dropdown menu for line width.
+	* Replace Export, MD5 and LoadCompare buttons with dropdown menu.
+	* Find controls can now be toggled on or off.
+	* Now jumps to found string line.
+
+2.05 - Aug 1,2025
+   * Viewer: Font
+	* Now shows all characters in set. Was truncating for last line if not full.
+	* Editor will ask if you want to pad font to multiple of 128 characters.
+	* Fix buffer selection.
+	* Swap button now prompt to copy from Buffer 1 to 2 when buffer 2 is empty.
+	* Add XCut button which cuts but does not copy to clipboard.
+
+2.00 RELEASE - Jun 13,2025
+   * Major New Features:
+   	* Total GUI Overhaul with Themes.
+   	* True CBM Font rendering for Directory Lists and Viewer.
+   	* Uses OpenCBM "raw" mode to get real filenames.
+	* Can be installed in it's own directory with paths to the utilities.
+	* Screen Designer with authentic Machine power-on messages and colours.
+
+   * Tested with Windows 11, VICE 3.6
+   * Tweaked formatting of headers and indenting of this help file.
+   * Add check and warning if deleting the Disk Image File currently in use.
+   * Add message if trying to write an image INTO another image.
+   * Fix viewing SEQ files from X-cable.
+   * Fix transfer of files from Disk Image to X-Cable Drive.
+   * Fix BUG where selected X-cable Drive Number got messed up.
+   * Add more info when transfer fails.
+   * Add # of files in directory after Blocks Free text.
+   * Double-click on a file in X-cable now defaults to viewing the file.
+   * Remove Settings X-Cable Detect and Reset buttons as they are on the main window.
+   * Add Date and Time plus error and output results to LOG file.
+   * Add check for X-cable to LocalPC to see if file is written, plus message for imaging option.
+   * When creating new folder, add option to switch to it.
+   * Copying multiple files from x-cable to LocalPC will de-select files that were successfully copied.
+   * PRG, SEQ, and USR files can now be copied reliably to/from any x-cable, localpc, or image directory.
+   * Add Disk Image sort options.
+   * Add Font Selector, Sizer, and Toggle for Disk Image, CBM-Link, and X-Cable directory listings.
+   * Switch to "raw" mode directories for X-cable.
+   * Add elapsed timer to progress window.
+   * Replaced X-cable Device dropdown and Model# box with single dropdown listing only available drives.
+   * Moved rarely used X-cable Directory options to drop-down menu beside the Device dropdown.
+   * Fix Custom NIBread commandline missing space separator
+
+   * Themes:
+	New feature!
+	Supports custom Fonts for Directory Listings and Viewers.
+	Loadable bitmap for definable button graphics.
+	Add themes just by adding a bitmap to the Theme folder.
+	Definable Colours for Form, Menu Strip, Frames, Tabs and Font controls.
+	Tabs now have separate selected and un-selected colours.
+	Select a Theme, or change list colours from the main window middle section.
+
+   * Viewer, BAS:
+	Fix listing not updating when BASIC version changed.
+	Fix "Break Multi" breaking lines with ":" inside quotes".
+	Remove colour pickers.
+	Add Encoding and Font Size menus.
+	Add Line Length menu.
+	Real CBM Font rendering shows BASIC listings like on a real machine.
+	Add detection of CLCD BASIC 3.6 files.
+
+   * Viewer, SEQ:
+	Add Encoding and Font Size menus.
+	Add Line Length menu.
+	Add Un-printable option.
+	Now strips out NULL characters.
+	
+   * Viewer, HEX:
+	Add Encoding and Font Size menus.
+	Add Show Bytes option. When deselected shows 4x per line.
+	Add Graphics option.
+	Add HEX case option.
+	Add Difs Only option for Compared files.
+
+   * Viewer, FONT:
+	Add Auto and Fit to width options.
+	Add Buffer selection buttons.
+	Re-vamped Font Menu. Now uses checkmarks when features are enabled. Disables items when not available.
+	Added Screen Designer (see below).
+	Add SET# and CHR# display when mousing overtop the character set.
+	Add additional font conversion options (8x32, 6x8 etc).
+
+   * Viewer, SCREEN DESIGNER:
+	Brand new feature integrated into Font Viewer/Editor.
+	Supports color themes.
+	Supports real machine power-on screen.
+	Supports up to 80x50 format screens. Switching does not erase content.
+	Supports blinking cursor.
+	Supports CBM and Non-CBM font - 8x8 or 8x16 pixels, 128 or 256 characters per font.
+	Supports Load/Save Buffer, and Export in current screen format.
+	Supports direct entry of characters from the Font Viewer.
+	Supports Cursor, Home, CLS (shift-home), Insert, Delete, Backspace, Insert Selected (shift-Insert).
+	Supports keyboard MACRO recording and playback.
+
+   * Viewer, ASM:
+	Add SAVE AS.. button and change SAVE to use current project filename
+		(ie: No prompting for filename each time).
+	Add Date and Time to project file and it is displayed in the Project Tab.
+	Add option to add the current Hex address to any standalone comment.
+	Add "Assembly Block" Table option.
+	Improved code flow for faster disassembly and less flashing of the output.
+	Add "L" Table for Little-endian .WORD
+	You can now specify the number of table entries per line for all table types.
+	Remove table width restrictions.
+	Add support for AS6500 assembler format
+	Improved Code Tracer with verbose output option.
+
+   * Config:
+	Now uses selected Theme
+	Add "Use First Detected Drive" to X-Cable Tab
+	Add Utilities Path Option. You can now specify the paths to OpenCBM,VICE etc
+	Remove VICE path from VICE tab. Use above now.
+
+   * Source Code:
+	Much more commenting and general organization of the source. Re-arranged subroutines.
+
+
+1.24 - Sept 20,2021
+   * Viewer,HEX: Add MD5 checksum button. Needs MD5.EXE in opencbm path.
+
+1.23 - Sept 17,2021
+   * Viewer, ASM: Add Re-Assemble feature, current line# display, and Jump-to-line option.
+
+1.22 - Sept 13,2021
+   * Fixed Disk Image reading when using newer C1541.EXE versions.
+   * Add support for G71 images - Tested with VICE 3.5 GTK3 64bit version
+
+1.21a - Sept 10, 2021
+   * Viewer, ASM: Add ML output split view. Add divider feature to block comments.
+
+1.20 - Sept 1, 2021
+   * Viewer, ASM: Add Block Comments with show/hide option, Line# start and increment.
+
+1.19 - Aug 25, 2021
+   * Add detection for unknown drives (ie: 3rd-party clones etc). These drives default to 1541.
+   * Viewers:
+	* BAS: Add support for Magic Voice extensions (including V364). Add font size changer.
+	* SEQ: Add font size changer.
+        * ASM: Fix C264 platform.
+	
+1.18 - May 4, 2021
+   * Viewer:
+	* Remove "ding" sound when changing load address manually.
+        * FONT:	Fix font editor when saving range or editing files with offset>0.
+		Add Convert 32 pixel tall font to 16 tall (useful for some .FON files)
+
+1.17 - Feb 16, 2021
+   * Viewer, HEX: Add Compare Header, fix last line spacing.
+
+1.16 - Feb 11, 2021
+   * Viewer, HEX: Add Printable to Compare.
+
+1.15 - Feb 9, 2021
+   * Viewer, HEX: Add Compare feature.
+
+1.14 - Feb 8, 2021
+   * Viewer, HEX: Add SAVE to text button, and ASMFmt option.
+
+1.13 - Sept 25, 2020
+   * Viewer, FONT: Extend max border size. Add outline option.
+
+1.12.1 - Sept 3, 2020
+   * Viewer, FONT: Fix font view pixel corruption.
+
+1.12 - July 8, 2020
+   * Viewer, HEX: Add Search.
+
+1.11 - Sept 26, 2018
+   * Viewer:
+	* BMP:	Add "Load VPL" button to load VICE Palette files. Loads "CBMXfer.vpl" automatically if
+		found when viewer is loaded.
+
+1.10 - Aug 9, 2018
+   * Viewer:
+	* Fix Load Address changes not updating view.
+	* ASM:	Fix crash when adding large data range, causing listing to end before previous remembered top position.
+		Add Binary data table, and also optional data table length parameter.
+	* FONT: Change "Wide" checkbox to separate buttons, now 8, 16,32,64 and 128 characters wide.
+		Add more Zoom levels.
+		Add Font Editor. Re-designed layout.
+		Add Drop-down menu for Multi-colour, Border, Save as BMP, Edit mode, Save Font, and Convert options.
+		Faster re-draw - pixels not regenerated unless colour is changed.
+   * Code optimizations
+
+1.03 - May 23,2017
+   * Bug fixes
+   * Improved ASM output formatting.
+
+1.02 - May 16,2017
+   * Viewer:
+	* Re-structured viewer code. File is loaded into buffer and all views (except BITMAP) can read
+	  the buffer instead of re-reading the file.
+	* Moved Load Address checkbox and value to top, and it's now shared with all views.
+	* Added file size display. Added Overflow indicator when file exceeds maximum 32K.
+	* FONT: Add Multi-colour View Mode.
+	* ASM: Added code Flow Tracing! It will now find data tables automatically!
+		Remember ASM listing position and restore after update.
+		Check for project changes when attempting to close viewer.
+		Fix error with disassemblies ending at $FFFF.
+		Fix illegal opcode status box (green/yellow).
+		Fix unnecessary reading of source file on second pass (file is in buffer).
+	* HEX: Sync selected line to FONT offset.
+	* BMP: Optimized pixel drawing for faster speed.
+   * Batch Imaging now saves last batch#.
+   * Added "Ignore BAD disk ID's when imaging D64" option.
+
+1.00 - Mar 31,2017
+   *** The "Xfer" in "CBMXfer" has always been short for "Transfer". So, to avoid any confusion with
+       pronunciation or what the program does, I am updating the wording in both the program and
+       documentation to "CBM-Transfer". The executable file will remain "CBMXfer.exe".
+
+   *** 2017 marks the 10th Anniversary of this program, and to acknowledge it this will be Version 1.00!
+       It's about time I consider this a "real" program! ;-) To mark the Anniversary I am releasing this
+       as Open Source. Complete source-code can be found on GitHub:  www.github.com/sjgray/cbm-transfer
+   * New button graphics, and general GUI layout tweaking.
+   * Improved Error checking.
+   * Improved Prompting for file deletion.
+   * Added additional checking and prompting to overwrite existing files.
+   * Path history now sorted and duplicates removed.
+   * Left and Right LocalPC views now have identical functions.
+   * Add Custom Filter for LocalPC views.
+   * Add Disk Image tab to right side. New "2" button to select image.
+   * New copy options for image-to-image and LocalPC-to-image.
+   * Improved Drag and Drop file/directory recognition.
+   * Improved CBM Filename detection (,P ,S etc) for transfers.
+   * Add Remame files and Validate options for Disk Image files.
+   * Fixed/added some tooltips.
+   * Fixed crash when trying to rename LocalPC restricted files.
+   * DAD button now shows or hides the DAD window.
+   * Add Custom option strings for NibRead, NibWrite, NibConv.
+   * Add ABORT button when imaging disks. May require reset of zoom floppy.
+   * Viewer:
+     * Add drag and drop.
+     * Add "Dual-view" sizing buttons.
+     * BAS:  Add option pane toggle.
+     * SEQ:  Add "Ignore LF" (linefeed character) option. 
+     * ASM:  Much Faster.
+		New Project options, with load/save.
+		New Help file.
+		Improved layout with restructured sidebar with tab buttons.
+		Improved output listing, with spacing options.
+		New data block types: "D","T","V" and "R".
+		New options for multiple Platforms, CPU's, and Prefix's. Supports all "Illegal" opcodes.
+		New support for comments with single or double dividers, or just dividers.
+		Added ability to load "Regenerator" label and comment files from systems folder.
+		New SYMBOL import from comma-delimited, tab-delimited, or fixed-width text files.
+		Improved-Find/FindAll.
+		New lists for Labels and Comments.
+		New lists for Generated-Labels and External JSR.
+		New Quick Label, Block and Comment buttons along top.
+		Add listing Black/White toggle button.
+     * HEX:  Added ability to sync with selected lines in ASM view when Dual-View is enabled.
+		Add Show CBM option.
+		Add listing Black/White toggle button.
+     * FONT: Border/Divider lines - Add Top/Left to Set, plus pixel lines in Selected when border is on.
+		Add Border/Divider lines to Colour selection.
+		Add skip-bytes buttons.
+		Add 4x and 5x Zoom buttons.
+		Fix "Save BMP" to remove extra black area.
+   * Source code has been cleaned up, organized, and commented.
+
+0.41.1 Mar 15,2016
+   * Added support for copying .P00 files to/from Disk Images. Check "Write P00" option to enable
+     P00 creation.
+   * P00 files can now be viewed.
+   * Removed "show CMD window" option.
+   * Add "Create new folder" option in drop-down menu.
+   * Enable "Cancel All" option for multi-file rename.
+   * Fix "Lock View" in viewer.
+   * Add 16/32 character wide font view option.
+   * Temp fix for TRUE/FALSE settings in INI not recognized in non-English Windows
+     (German, French, Spanish now recognized - Will need to properly change INI save/load routines at
+     some point).
+   * Add option to remember/use SRC/DEST paths .
+   * Config options/settings are now automatically saved when you click OK and when you exit the app
+     (removed "Save as Default" button).
+   * Window layout (sized using ">>" buttons) are now remembered.
+   * Fix for "1571 (XM1541)" return string.
+   * Viewer: fixed dual view refresh.
+   * Fix for copying files into images.
+   
+0.40 Aug 12,2014
+   * Added DAD window and option.
+   * ML: Add "Find" buttons to SYM and DT lists. Select an entry then click to find the next occurrence.
+   * ML: Click status box to find next "???" (unknown instruction).
+   * Changed directory listings to lowercase so graphics characters now appear as uppercase letters.
+   * Changed Default fonts in lister to be courier fixed-width.
+   * Click drive model box to detect drives. If 1571 is found will ask if you want double-sided mode.
+   * Re-wrote progress bar code to parse output file. Shows track details.
+   * Fixed not checking for existing image file. now asks if you want to overwrite.
+   * BIN: Added checkbox to view as "7-bit". Strips off top bit in printable area.
+   * Fix "Preview Commands" option not being saved/restored.
+   * Fix transfers from inside Disk Images.
+   * Fix scratch and rename via x-cable.
+   * Added option to use 'C64 USER MONO' truetype font in cbm file lists. Download from:
+	http://style64.org/release/c64-truetype-v1.0-style#attachments
+   * Improved support for CMD FD drive images (D1M, D2M, D4M).
+   * CSET: Added Save as BMP function.
+   * Add ability to switch 8250/SFD-1001 to single-sided mode.
+   * Fix "Help" button.
+   * Added ">>" button to expand left side to show both LocalPC and selected Disk Image.
+   	When expanded clicking a supported image file automatically views it
+   * Added catalog file.
+   * Added drop-down menu to allow saving Disk Image as text file, adding to catalog, or viewing catalog
+   * Viewer: Added dual view mode.
+   * Add ">>" to display Drive and Path elements to change directory in both LocalPC panes.
+   * Re-arranged some buttons so that path and file lists are wider.
+   * Implemented "Delete" from image file.
+   * Implemented "Rename" and "Make Dir" on Destination PC pane.
+   * Add Filter to Dest LocalPC pane.
+   * Implement Operation 9 of 12 - Copy file from LocalPC to inside Disk Image file.
+   * Better handling of large files in viewer (no overflow errors).
+   * VICE emulator selector is now closable.
+   * Reading Disk Images no longer shows progress window, which is good for dual-view mode.
+
+0.32.2 Feb 12,2013
+   * Fix Path History saving bug.
+   * Updated documentation to match new features.
+
+0.32.1 Feb 11,2013
+   * Add UP button to Source Path.
+   * Update viewer top-row button behaviour to match main form.
+   * Add Path History option, Add/Remove options from dropdown.
+   * Add BATCH image writing.
+   * Add NIB writing for D64 and NBZ.
+
+0.32 Feb 8,2013
+   * Change check for disk type. Allow non-standard disks to be imaged with nibtools if enabled.
+   * Better 1581 progress bar.
+   * Fix Hex viewer missing bytes.
+   * Fix ASM calculating wrong relative branch address, Added Symbol Table.
+   * Formatting single-sided on 1571 drive now uses fast format again. Double-sided uses CBMDOS command.
+   * Handle unknown disk ID's with prompt.
+   * ASM-Loads faster, bug fixes.
+   * ASM-Adding Load/Save/Add/Delete and Edit for tables.
+   * ASM-Now shows SYM and DT on left, disassembly on right when ">" clicked.
+   * ASM-First tries to load matching SYM and DT files (ie: filename.sym and filename.dt)
+           If not found then "default.sym" and "default.dt" from CBM-Transfer directory.
+   * ASM-Added Status box (Yellow=problems, Green=good).
+   * ASM-Fix overflow with large files.
+   * BIN Viewer-Added "Load Address in file" option.
+   * Double-click on Source file entry defaults to VIEW the file.
+   * Double-click on Disk Image file entry defaults to VIEW the file.
+   * Add support for CMD floppy images (D1M, D2M, and D4M) in file filter.
+   * Add support for VICE xcbm5x0 emulator.
+   * You can now drag and drop a folder to the Source or Destination Path to change to it.
+   * Fix bug causing crash if you click on a file in source directory that was renamed or
+     deleted (refreshes list).
+   * Added Source Directory dropdown menu for path history.
+   * CHRSET-rearranged elements, Added Zoom buttons.
+   * CHRSET-fixed color picker not recognizing CANCEL button.
+   * Top mode-selector buttons now have white text when selected and black when not selected.
+   * Replace EXPLORE,SAME,SWAP buttons with drop-down menu.
+
+0.31 Jan 18,2012
+   * Added Batch Disk Image creation. New options frame.
+   * Fixed bug in options, not saving x-cable transfer mode (always returned to 'auto').
+   * Added main window right pane hide/show button ("<<").
+   * Added refresh button to Disk Image view (by request).
+   * Made progress window movable.
+   * Added check for TMP environment variable if TEMP does not exist.
+   * Added color schemes to chrset viewer plus grid lines option.
+   * Added support for IMGCOPY (beta release) for Zoom Floppy adapters with IEEE option.
+   * Added Help button to display "CBMXfer.txt" file.
+   * Added Drag and Drop of Image files to Disk Image Viewer.
+   * Added Nibtools "-s" option for 1571 fast serial mode.
+   * Enhanced Drive Detection.
+   * Added drive model# for XCable.
+   * Supports 1571 dual-sided formatting.
+   * Supports formatting on non-1541 drives.
+
+0.30 Mar 20,2011
+   * Removing the "BETA" tag. I don't want to discourage use of the program because it's "BETA".
+   * Expanded documentation.
+   * New look, cleaner more functional layout.
+   * Add support for NIBTOOLS:
+	* Support for NBZ.
+	* Create G64 and/or D64.
+	* Support Track start/end, Error Retries, and most common switches.
+	* Prompt to convert NIB to D64 for viewing.
+   * Re-work source directory filter.
+   * Add command Logging, EXE Check disable (for people with binaries in $PATH).
+   * Additional filename conversion options for illegal MS-DOS filenames.
+   * Re-work text/options for Zoom Floppy.
+   * Reorganize Config window - Now with selector on left side. Now opens centered on main window..
+   * Enhanced VICE support - Multiple machine selection options, including prompting to select.
+   * Viewer:
+	* Fixed viewer not clearing lists, implemented binary view.
+    	* Fixed SEQ viewer not handling characters in $C0-$DA range.
+	* Added BITMAP viewer (using code from CBM2BMP by Peter Weighill).
+	   
+   * Additional ToolTips and fixes to some.
+   * Added option to treat image files as normal file (allows copying D64 files to large media
+	ie: 1581 or uIEC disk).
+   * Additional checks to make sure files transferred properly from images.
+   * Added support in X-Cable for selecting 1581 Partitions and returning to the root partition.
+   * Added support for Vice 2.3 x64sc emulator.
+ 
+
+0.28 BETA (Apr 28,2010... Released to web Nov 14,2010)
+   * Fix Dxx creation path problem.
+
+
+0.27 BETA (Nov 30,2009)
+   * Added additional ALT+key shortcuts to buttons.
+   * Split "View/Run" into two buttons.
+   * Source window "Run" button now can run Disk Images using VICE.
+   * Disk Image Viewer now has "Run" button to run PRG files INSIDE images using VICE.
+
+0.26 BETA (work in progress)
+   * Improved support for D71 files.
+   * ML Viewer:
+       * Fix addresses >$8000.
+       * Add missing space after branch instructions.
+       * Add copy to clipboard button.
+
+0.25 BETA (Nov 30,2008)
+    * Version Number format change.. I don't need so many digits ;-)
+    * Added "Open Directory" button in Explorer to Src and Dest folders.
+    * Added X-cable and CBMLINK enable checkboxes to options.
+    * Improved error handling (still needs work. Thanks to Kees Zaaijer for feedback!).
+    * Changed Basic Lister to Multi-format viewer.
+	 - View as: BASIC, Font, SEQ, and Disassembler.
+	 - Not Working: Binary viewer.
+    * Changelog file now in this readme    .
+    * Preliminary Documentation - Let me know what topics need more attention ;-)
+
+0.0.1 BETA (Feb 17,2007) Initial Release
+
+    Changes and Additions compared to GUI4CBM4WIN
+
+    * Fix INI Options not saved or loaded (PreviewCheck).
+    * Added Confirm D64 Creation option.
+    * New layout for Options window.
+    * Changed Dir load so "blocks free" is in separate area.
+    * Added Select All/None buttons.
+    * D64 creation filename defaults to name of CBM disk header string.
+    * Added D71 image writing to X-Device (real drive on X cable).
+    * Added "clear" box to prompt.
+    * Removed message to check options.. it goes there anyway.
+    * Removed startup check for EXE's. Changed to when called.
+	(so users are not forced to download EXE files they don't need)
+    * Added Drag-and-Drop copy to CBM drive.
+    * Fixed Blocks-free/KB overflow error on large files.
+    * Cleaned up source to make more readable.
+    * Renamed GUI elements to conform to VB naming convention.
+      (ie: Labels start with lbl, Buttons with cmd)
+    * Fixed operations so Current Directory is not changed every time.
+    * Added File Filter menu.
+    * Added separate SOURCE and DESTINATION directories.
+    	* Path Swap/Copy functions.
+    * Added support for Vice Team's C1541 command line utility to work with Disk Images.
+	* View Image Directory.
+	* Create new Image.
+	* Copy files from Image to Local PC or X-Device.
+    * Added support for CBMLink command to talk to Commodore Machines via serial port link.
+    * Reword Frame header text since there is more than one "CBM Drive".
+	(ie: Distinguish drives on "X-Cable" or via "CBMLink")
+    * Toggle between X/CBM/LocalPC destinations.
+    * Added Tooltips.
+    * Added Keyboard shortcuts to some buttons.
+    * Added function to convert CBM filenames to PC-friendly filenames.
+    * Added CBM BASIC Lister.
+	* Requires "tokens.dat" data file.
+	* Supports all released version Tokens.
+	* Auto detect correct BASIC version (override with dropdown menu).
+	* Displays Load Address and Best-guess of target Machine.
+	* List Formatting options.
+		* Select Text/Graphic mode.
+		* Use CBM font if available (must be in system fonts dir).
+		* Expands special characters (ie: {RVS} ).
+		* Break multi-statement lines.
+		* Pad tokens with spaces.
+	* Resizable window.
+	* Export to clipboard.
+	* Export to text File.
+	* View with PRG files on LocalPC, inside Image or on X-drive.
+    * This release 8 of 12 possible copy operations are complete (The others display a "sorry" message).
+<END>
