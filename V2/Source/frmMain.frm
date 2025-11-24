@@ -4933,7 +4933,7 @@ Private Sub DoDeviceMenu(ByVal Index As Integer)
             
         Case 5, 6                                                       'Set Single/Double sided
             Select Case Model
-                Case "1571", "8250", "SFD-": AskSidedMode Model, Index - 4
+                Case "1571", "8250", "SFD-": AskSidedMode Model, Index - 5
                 Case Else: MsgBox "Sorry, this drive is not changable"
             End Select
             
@@ -5003,7 +5003,7 @@ Private Sub AskSidedMode(ByVal Model As String, ByVal Sides As Integer)
     TMsg = "Setting 1571 mode..."
 
     Select Case UCase(Left(Model, 4))
-        Case "1572"
+        Case "1571"
             Status = DoCommand(CBMCtrl, TCmd & Quoted("U0>M" & Tmp), TMsg)
         Case "8250", "SFD-"
             Status = DoCommand(CBMCtrl, TCmd & Quoted("m-w 172 16 1 1"), TMsg)
